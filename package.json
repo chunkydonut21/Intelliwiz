@@ -27,6 +27,7 @@
     "express-session": "^1.17.2",
     "jquery": "^3.6.0",
     "mongoose": "^6.2.0",
+    "mongoose-timestamp": "^0.6.0",
     "passport": "^0.5.2",
     "passport-local": "^1.0.0"
   },
