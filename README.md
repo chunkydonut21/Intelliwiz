@@ -1,5 +1,14 @@
 # Intelliwiz
+
 Global information platform built by the power of crowdsourcing to benefit everyone
 
+CM2020 - Agile Software Project Final
 
-CM2020 - Agile Software Project Final Project
+### How to Install locally
+
+```sh
+$ git clone https://github.com/chunkydonut21/Intelliwiz.git
+$ cd Intelliwiz
+$ npm install
+$ npm run dev
+```
