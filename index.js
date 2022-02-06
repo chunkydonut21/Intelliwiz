@@ -29,7 +29,6 @@ mongoose
   .catch((err) => console.log(err))
 
 // built in middleware for express to handle incominng post request
-// ( no dependency required and alternate to body-parser)
 app.use(express.urlencoded({ extended: true }))
 
 // Express body parser
@@ -72,6 +71,8 @@ app.use('/stylesheets/fontawesome', express.static(path.join(__dirname, 'node_mo
 app.set('views', __dirname + '/views')
 app.set('view engine', 'ejs')
 app.engine('html', require('ejs').renderFile)
+
+app.use('/users', require('./routes/userRoutes'))
 
 // listening the app on the specified port
 app.listen(port, () => console.log(`App is running at port ${port}!`))
