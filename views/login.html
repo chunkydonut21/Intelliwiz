@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Add Device | My Smart Home</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/jquery.min.js"></script>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row h-100">
+        <div class="col-md-8 col-sm-12 d-flex justify-content-center align-items-center bg-purple">
+          <div class="text-center text-light">
+            <h1>Intelliwiz</h1>
+            <h5>Global information platform built by the power of crowdsourcing to benefit everyone</h5>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-12">
+          <form action="/login" method="post">
+            <div class="login-form">
+              <div class="text-center mb-5">
+                <h4>Login on Intelliwiz!</h4>
+                <%- include ("./components/messages.html") %>
+              </div>
+              <div class="mb-3 mx-5">
+                <label for="email" class="form-label">Email address</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  name="email"
+                  required
+                  value="<%= typeof email != 'undefined' ? email : '' %>"
+                  placeholder="Enter your email here"
+                />
+              </div>
+              <div class="mb-3 mx-5">
+                <label for="email" class="form-label">Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  name="password"
+                  required
+                  placeholder="Enter your password here"
+                />
+              </div>
+              <div class="mb-3 mx-5">
+                <div class="d-grid gap-2">
+                  <button class="btn btn-primary" type="submit">Submit</button>
+                </div>
+              </div>
+              <div class="mb-3 mx-5">Click <a href="/register">here</a> if you don't have an account yet!</div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

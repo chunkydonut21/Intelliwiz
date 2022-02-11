@@ -15,12 +15,14 @@ module.exports = function (passport) {
         }
 
         // Match password
-        if (!bcrypt.compareSync(password, appUser.password)) {
+        if (!bcrypt.compareSync(password, user.password)) {
           return done(null, false, { message: 'Password doesnt match' })
         } else {
           return done(null, user)
         }
-      } catch (err) {}
+      } catch (err) {
+        return done(null, false, { message: 'Error while authenticating.' })
+      }
     })
   )
 
@@ -28,5 +30,9 @@ module.exports = function (passport) {
     done(null, user.id)
   })
 
-  passport.deserializeUser(function (id, done) {})
+  passport.deserializeUser(function (id, done) {
+    User.findById(id, function (err, user) {
+      done(err, user)
+    })
+  })
 }

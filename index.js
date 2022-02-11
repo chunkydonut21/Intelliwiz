@@ -34,7 +34,17 @@ app.use(express.urlencoded({ extended: true }))
 // Express body parser
 app.use(express.urlencoded({ extended: true }))
 
-app.use(express.static(__dirname + '/public'))
+// static files configuration for bootstrap, css, jquery and fontawesome icons
+app.use(express.static(path.join(__dirname, 'public')))
+app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')))
+app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')))
+app.use('/js', express.static(path.join(__dirname, 'node_modules/jquery/dist')))
+app.use('/stylesheets/fontawesome', express.static(path.join(__dirname, 'node_modules/@fortawesome/fontawesome-free')))
+
+// setting up the view engine
+app.set('views', __dirname + '/views')
+app.set('view engine', 'ejs')
+app.engine('html', require('ejs').renderFile)
 
 // Express session
 app.use(
@@ -50,6 +60,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 // connect flash as a middlewar to show the error and success messages
+// app.use(flash())
 app.use(flash())
 
 // Global variables
@@ -60,19 +71,7 @@ app.use(function (req, res, next) {
   next()
 })
 
-// static files configuration for bootstrap, css, jquery and fontawesome icons
-app.use(express.static(path.join(__dirname, 'public')))
-app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')))
-app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')))
-app.use('/js', express.static(path.join(__dirname, 'node_modules/jquery/dist')))
-app.use('/stylesheets/fontawesome', express.static(path.join(__dirname, 'node_modules/@fortawesome/fontawesome-free')))
-
-// setting up the view engine
-app.set('views', __dirname + '/views')
-app.set('view engine', 'ejs')
-app.engine('html', require('ejs').renderFile)
-
-app.use('/users', require('./routes/userRoutes'))
+app.use('/', require('./routes/userRoutes'))
 
 // listening the app on the specified port
 app.listen(port, () => console.log(`App is running at port ${port}!`))
