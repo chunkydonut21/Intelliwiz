@@ -32,7 +32,7 @@ mongoose
 app.use(express.urlencoded({ extended: true }))
 
 // Express body parser
-app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 
 // static files configuration for bootstrap, css, jquery and fontawesome icons
 app.use(express.static(path.join(__dirname, 'public')))

@@ -17,7 +17,6 @@ router.get('/register', redirectAuthenticated, (req, res) => res.render('registe
 // Register
 router.post('/register', async (req, res) => {
   const { name, email, password, confirm_password } = req.body
-  console.log(req.body)
 
   let errors = []
 
@@ -41,7 +40,7 @@ router.post('/register', async (req, res) => {
   const user = await User.findOne({ email })
   if (user) {
     errors.push({ msg: 'Email already exists' })
-    res.render('register.html', { errors, name, password, confirm_password })
+    return res.render('register.html', { errors, name, password, confirm_password })
   }
 
   const pass = await bcrypt.hashSync(password, bcrypt.genSaltSync(10))
@@ -57,6 +56,7 @@ router.post('/register', async (req, res) => {
 
 // Login
 router.post('/login', async (req, res, next) => {
+  console.log(req.body)
   passport.authenticate('local', {
     successRedirect: '/home',
     failureRedirect: '/',
