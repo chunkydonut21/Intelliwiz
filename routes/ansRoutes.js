@@ -37,7 +37,7 @@ router.delete('/:id', ensureAuthenticated, async (req, res) => {
 
 // Upvote an answer
 router.post('/upvote', ensureAuthenticated, async (req, res) => {
-  await Question.findOneAndUpdate({ _id: req.body.id }, { $push: { upvotes: req.user.id } })
+  await Answer.findOneAndUpdate({ _id: req.body.id }, { $push: { upvotes: req.user.id } })
 
   req.flash('success_msg', 'The Answer has been upvoted.')
   res.redirect('/home')
@@ -45,7 +45,7 @@ router.post('/upvote', ensureAuthenticated, async (req, res) => {
 
 // Downvote an answer
 router.post('/downvote/:id', ensureAuthenticated, async (req, res) => {
-  await Follow.findOneAndUpdate({ _id: req.body.id }, { $pop: { upvotes: req.user.id } })
+  await Answer.findOneAndUpdate({ _id: req.body.id }, { $pop: { upvotes: req.user.id } })
 
   req.flash('success_msg', 'The Answer has been downvoted.')
   res.redirect('/home')

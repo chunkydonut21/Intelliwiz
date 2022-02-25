@@ -57,7 +57,7 @@ router.post('/upvote/:id', ensureAuthenticated, async (req, res) => {
 
 // Downvote a question
 router.post('/downvote/:id', ensureAuthenticated, async (req, res) => {
-  await Follow.findOneAndUpdate({ _id: req.params.id }, { $pop: { upvotes: req.user.id } })
+  await Question.findOneAndUpdate({ _id: req.params.id }, { $pop: { upvotes: req.user.id } })
 
   req.flash('success_msg', 'The Question has been downvoted.')
   res.redirect('/home')
