@@ -4,12 +4,135 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Intelliwiz | Home</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
   </head>
   <body>
-    <div class="container">
-      Home page will come here!
-      <a class="btn btn-primary" href="/logout">Logout</a>
+    <div class="container-fluid">
+      <%- include ("./components/navbar.html") %>
+
+      <div class="row">
+        <div class="col-3">
+          <div class="row">
+            <div class="col-12 mt-3">
+              <h6 class="text-muted ms-2">CATEGORIES</h6>
+              <ul class="list-group">
+                <li class="list-group-item">An item</li>
+                <li class="list-group-item">A second item</li>
+                <li class="list-group-item">A third item</li>
+                <li class="list-group-item">A fourth item</li>
+                <li class="list-group-item">And a fifth one</li>
+              </ul>
+
+              <footer>
+                <div class="pt-4 b-outline">
+                  <h6>Intelliwiz</h6>
+                  <p>CM2020 - Agile Software Project Finals</p>
+                </div>
+              </footer>
+            </div>
+          </div>
+        </div>
+        <div class="col-9" style="height: 100vh; overflow-y: scroll">
+          <div class="row">
+            <div class="col-12 mt-3">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                  <p class="card-text">Do you have any question in your mind? Ask Something!</p>
+                  <a class="btn btn-primary" href="/question">Ask a Question</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 mt-5">
+              <h4>List of Latest Question asked!</h4>
+            </div>
+            <div class="col-12 mt-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex align-items-center">
+                    <div class="avatar"></div>
+                    <h6 class="card-subtitle text-muted ms-2">Card title</h6>
+                  </div>
+                  <p class="card-text mt-2">Which is the biggest animal on earth?</p>
+                  <a class="btn btn-success" href="/question"> <i class="fa-solid fa-up-long"></i> Upvote</a>
+                  <a class="btn btn-outline-danger" href="/question"> <i class="fa-solid fa-down-long"></i> Downvote</a>
+                  <a class="btn btn-outline-primary" href="/question"><em> View Answers...</em></a>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 mt-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex align-items-center">
+                    <div class="avatar"></div>
+                    <h6 class="card-subtitle text-muted ms-2">Card title</h6>
+                  </div>
+                  <p class="card-text mt-2">Which is the biggest animal on earth?</p>
+                  <a class="btn btn-success" href="/question"> <i class="fa-solid fa-up-long"></i> Upvote</a>
+                  <a class="btn btn-outline-danger" href="/question"> <i class="fa-solid fa-down-long"></i> Downvote</a>
+                  <a class="btn btn-outline-primary" href="/question"><em> View Answers...</em></a>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 mt-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex align-items-center">
+                    <div class="avatar"></div>
+                    <h6 class="card-subtitle text-muted ms-2">Card title</h6>
+                  </div>
+                  <p class="card-text mt-2">Which is the biggest animal on earth?</p>
+                  <a class="btn btn-success" href="/question"> <i class="fa-solid fa-up-long"></i> Upvote</a>
+                  <a class="btn btn-outline-danger" href="/question"> <i class="fa-solid fa-down-long"></i> Downvote</a>
+                  <a class="btn btn-outline-primary" href="/question"><em> View Answers...</em></a>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 mt-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex align-items-center">
+                    <div class="avatar"></div>
+                    <h6 class="card-subtitle text-muted ms-2">Card title</h6>
+                  </div>
+                  <p class="card-text mt-2">Which is the biggest animal on earth?</p>
+                  <a class="btn btn-success" href="/question"> <i class="fa-solid fa-up-long"></i> Upvote</a>
+                  <a class="btn btn-outline-danger" href="/question"> <i class="fa-solid fa-down-long"></i> Downvote</a>
+                  <a class="btn btn-outline-primary" href="/question"><em> View Answers...</em></a>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 mt-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex align-items-center">
+                    <div class="avatar"></div>
+                    <h6 class="card-subtitle text-muted ms-2">Card title</h6>
+                  </div>
+                  <p class="card-text mt-2">Which is the biggest animal on earth?</p>
+                  <a class="btn btn-success" href="/question"> <i class="fa-solid fa-up-long"></i> Upvote</a>
+                  <a class="btn btn-outline-danger" href="/question"> <i class="fa-solid fa-down-long"></i> Downvote</a>
+                  <a class="btn btn-outline-primary" href="/question"><em> View Answers...</em></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>

@@ -8,6 +8,13 @@ const Question = require('../models/Question')
 // Ask Page
 router.get('/', (req, res) => res.render('ask.html'))
 
+// find all questions
+router.get('/list', async (req, res) => {
+  const ques = await Question.find({})
+
+  res.render('home.html', { ques })
+})
+
 // find a question
 router.get('/:id', async (req, res) => {
   const { id } = req.params.id
@@ -15,15 +22,6 @@ router.get('/:id', async (req, res) => {
   const que = await Question.findById(id)
 
   res.render('ask.html', { que })
-})
-
-// find all questions
-router.get('/list', async (req, res) => {
-  const { id } = req.params.id
-
-  const ques = await Question.find({})
-
-  res.render('home.html', { ques })
 })
 
 // Ask question route

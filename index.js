@@ -39,7 +39,10 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')))
 app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')))
 app.use('/js', express.static(path.join(__dirname, 'node_modules/jquery/dist')))
-app.use('/stylesheets/fontawesome', express.static(path.join(__dirname, 'node_modules/@fortawesome/fontawesome-free')))
+// app.use(
+//   '/stylesheets/fontawesome',
+//   express.static(path.join(__dirname, 'node_modules/@fortawesome/fontawesome/css/all.css'))
+// )
 
 // setting up the view engine
 app.set('views', __dirname + '/views')
