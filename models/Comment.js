@@ -9,6 +9,10 @@ const CommentSchema = new mongoose.Schema({
   reply: {
     type: String,
     required: true
+  },
+  _user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
   }
 })
 
