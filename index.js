@@ -72,7 +72,8 @@ app.use(function (req, res, next) {
 })
 
 app.use('/', require('./routes/userRoutes'))
-app.use('/que', require('./routes/queRoutes'))
+app.use('/question', require('./routes/queRoutes'))
+app.use('/answer', require('./routes/ansRoutes'))
 
 // listening the app on the specified port
 app.listen(port, () => console.log(`App is running at port ${port}!`))

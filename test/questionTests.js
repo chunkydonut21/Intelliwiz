@@ -7,7 +7,7 @@ describe('Question route tests', () => {
   it('should render Ask a question page', (done) => {
     chai
       .request('http://localhost:8089')
-      .get('/que/ask')
+      .get('/question')
       .end((err, res) => {
         assert.equal(res.status, 200)
         done()
@@ -16,7 +16,7 @@ describe('Question route tests', () => {
     it('should render list of all question page', (done) => {
       chai
         .request('http://localhost:8089')
-        .get('/que/list')
+        .get('/question/list')
         .end((err, res) => {
           assert.equal(res.status, 200)
           done()
@@ -25,7 +25,7 @@ describe('Question route tests', () => {
     it('should render a single question page', (done) => {
       chai
         .request('http://localhost:8089')
-        .get('/que/ask/fdd')
+        .get('/question/fdd')
         .end((err, res) => {
           assert.equal(res.status, 200)
           done()

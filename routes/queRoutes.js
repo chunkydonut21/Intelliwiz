@@ -6,10 +6,10 @@ const { ensureAuthenticated, redirectAuthenticated } = require('../config/authen
 const Question = require('../models/Question')
 
 // Ask Page
-router.get('/ask', (req, res) => res.render('ask.html'))
+router.get('/', (req, res) => res.render('ask.html'))
 
 // find a question
-router.get('/ask/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
   const { id } = req.params.id
 
   const que = await Question.findById(id)
@@ -18,7 +18,7 @@ router.get('/ask/:id', async (req, res) => {
 })
 
 // find all questions
-router.get('/ask/list', async (req, res) => {
+router.get('/list', async (req, res) => {
   const { id } = req.params.id
 
   const ques = await Question.find({})
@@ -27,7 +27,7 @@ router.get('/ask/list', async (req, res) => {
 })
 
 // Ask question route
-router.post('/ask', ensureAuthenticated, async (req, res) => {
+router.post('/', ensureAuthenticated, async (req, res) => {
   const { question } = req.body
 
   const ques = new Question({ _user, question })
@@ -38,7 +38,7 @@ router.post('/ask', ensureAuthenticated, async (req, res) => {
 })
 
 // delete question route
-router.delete('/ask/:id', ensureAuthenticated, async (req, res) => {
+router.delete('/:id', ensureAuthenticated, async (req, res) => {
   const { id } = req.params.id
 
   await Question.findByIdAndDelete({ _id: id })
@@ -48,8 +48,8 @@ router.delete('/ask/:id', ensureAuthenticated, async (req, res) => {
 })
 
 // Upvote a question
-router.post('/upvote', ensureAuthenticated, async (req, res) => {
-  await Question.findOneAndUpdate({ _id: req.body.id }, { $push: { upvotes: req.user.id } })
+router.post('/upvote/:id', ensureAuthenticated, async (req, res) => {
+  await Question.findOneAndUpdate({ _id: req.params.id }, { $push: { upvotes: req.user.id } })
 
   req.flash('success_msg', 'The Question has been upvoted.')
   res.redirect('/home')
@@ -57,7 +57,7 @@ router.post('/upvote', ensureAuthenticated, async (req, res) => {
 
 // Downvote a question
 router.post('/downvote/:id', ensureAuthenticated, async (req, res) => {
-  await Follow.findOneAndUpdate({ _id: req.body.id }, { $pop: { upvotes: req.user.id } })
+  await Follow.findOneAndUpdate({ _id: req.params.id }, { $pop: { upvotes: req.user.id } })
 
   req.flash('success_msg', 'The Question has been downvoted.')
   res.redirect('/home')
