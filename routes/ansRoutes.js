@@ -5,15 +5,6 @@ const { ensureAuthenticated, redirectAuthenticated } = require('../config/authen
 // Load Answer model
 const Answer = require('../models/Answer')
 
-// find all answers
-router.get('/:id', async (req, res) => {
-  const { id } = req.params.id
-
-  const answers = await Answer.find({ _question: id }).populate('_question')
-
-  res.render('ask.html', { answers })
-})
-
 // Add an answer route
 router.post('/:id', ensureAuthenticated, async (req, res) => {
   const { reply } = req.body
@@ -36,19 +27,41 @@ router.delete('/:id', ensureAuthenticated, async (req, res) => {
 })
 
 // Upvote an answer
-router.post('/upvote', ensureAuthenticated, async (req, res) => {
-  await Answer.findOneAndUpdate({ _id: req.body.id }, { $push: { upvotes: req.user.id } })
+router.post('/upvote/:id', ensureAuthenticated, async (req, res) => {
+  const resp = await Answer.findOne({ _id: req.body._answer, upvotes: { $elemMatch: { $eq: req.user.id } } })
+  if (resp) {
+    await Answer.findOneAndUpdate({ _id: req.body._answer }, { $pull: { upvotes: req.user.id } })
 
-  req.flash('success_msg', 'The Answer has been upvoted.')
-  res.redirect('/home')
+    req.flash('error_msg', 'The upvote from this answer has been removed.')
+    res.redirect(`/question/${req.params.id}`)
+  } else {
+    await Answer.findOneAndUpdate(
+      { _id: req.body._answer, upvotes: { $ne: req.user.id } },
+      { $push: { upvotes: req.user.id }, $pull: { downvotes: req.user.id } }
+    )
+
+    req.flash('success_msg', 'The Answer has been upvoted.')
+    res.redirect(`/question/${req.params.id}`)
+  }
 })
 
 // Downvote an answer
 router.post('/downvote/:id', ensureAuthenticated, async (req, res) => {
-  await Answer.findOneAndUpdate({ _id: req.body.id }, { $pop: { upvotes: req.user.id } })
+  const resp = await Answer.findOne({ _id: req.body._answer, downvotes: { $elemMatch: { $eq: req.user.id } } })
 
-  req.flash('success_msg', 'The Answer has been downvoted.')
-  res.redirect('/home')
+  if (resp) {
+    await Answer.findOneAndUpdate({ _id: req.body._answer }, { $pull: { downvotes: req.user.id } })
+
+    req.flash('success_msg', 'The downvote from this answer has been removed.')
+    res.redirect(`/question/${req.params.id}`)
+  } else {
+    await Answer.findOneAndUpdate(
+      { _id: req.body._answer },
+      { $push: { downvotes: req.user.id }, $pull: { upvotes: req.user.id } }
+    )
+
+    req.flash('error_msg', 'The Answer has been downvoted.')
+    res.redirect(`/question/${req.params.id}`)
+  }
 })
-
 module.exports = router

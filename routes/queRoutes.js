@@ -80,7 +80,7 @@ router.post('/downvote/:id', ensureAuthenticated, async (req, res) => {
   if (resp) {
     await Question.findOneAndUpdate({ _id: req.params.id }, { $pull: { downvotes: req.user.id } })
 
-    req.flash('error_msg', 'The downvote from this question has been removed.')
+    req.flash('success_msg', 'The downvote from this question has been removed.')
     res.redirect(`/question/${req.params.id}`)
   } else {
     await Question.findOneAndUpdate(
@@ -88,7 +88,7 @@ router.post('/downvote/:id', ensureAuthenticated, async (req, res) => {
       { $push: { downvotes: req.user.id }, $pull: { upvotes: req.user.id } }
     )
 
-    req.flash('success_msg', 'Downvote on this question is removed.')
+    req.flash('error_msg', 'The Question has been downvoted.')
     res.redirect(`/question/${req.params.id}`)
   }
 })
