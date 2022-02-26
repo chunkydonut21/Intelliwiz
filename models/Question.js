@@ -10,7 +10,17 @@ const QuestionSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  category: {
+    type: String,
+    required: true
+  },
   upvotes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    }
+  ],
+  downvotes: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
