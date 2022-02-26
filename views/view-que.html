@@ -65,12 +65,12 @@
             </form>
           </div>
 
-          <form action="/answer/create" method="post">
+          <form action="/answer/<%= que.id %>" method="post">
             <div class="mb-3 mx-5 mt-5">
-              <label for="answer" class="form-label">Have something constructive to answer? Enter here!</label>
+              <label for="reply" class="form-label">Have something constructive to answer? Enter here!</label>
               <textarea
                 class="form-control"
-                name="answer"
+                name="reply"
                 required
                 rows="4"
                 cols="50"
@@ -83,6 +83,35 @@
               </div>
             </div>
           </form>
+          <h5 class="ms-5">All Answers</h5>
+
+          <% ans.forEach(function(item) { %>
+          <div class="col-12 ms-5 mt-2">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex align-items-center">
+                  <div class="avatar"></div>
+                  <h6 class="card-subtitle text-muted ms-2"><%= item._user.name %></h6>
+                </div>
+                <p class="card-text mt-2"><%= item.reply %></p>
+
+                <div class="d-flex">
+                  <form action="/answer/downvote/<%= que.id %>" method="post">
+                    <button class="btn btn-success">
+                      <i class="fa-solid fa-up-long"></i> Upvote (<%= item.upvotes.length %>)
+                    </button>
+                  </form>
+
+                  <form action="/answer/downvote/<%= que.id %>" method="post">
+                    <button class="btn btn-outline-danger ms-2">
+                      <i class="fa-solid fa-down-long"></i> Downvote (<%= item.downvotes.length %>)
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <% }); %>
         </div>
       </div>
     </div>

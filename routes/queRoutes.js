@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const { ensureAuthenticated, redirectAuthenticated } = require('../config/authentication')
+const Answer = require('../models/Answer')
 
 // Load Question model
 const Question = require('../models/Question')
@@ -25,7 +26,8 @@ router.get('/:id', async (req, res) => {
   const { id } = req.params
   try {
     const que = await Question.findById(id)
-    res.render('view-que.html', { que })
+    const ans = await Answer.find({ _question: id }).populate('_user')
+    res.render('view-que.html', { que, ans })
   } catch (err) {
     console.log(err)
   }

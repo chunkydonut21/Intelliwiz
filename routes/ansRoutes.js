@@ -15,14 +15,14 @@ router.get('/:id', async (req, res) => {
 })
 
 // Add an answer route
-router.post('/', ensureAuthenticated, async (req, res) => {
-  const { _question, reply } = req.body
+router.post('/:id', ensureAuthenticated, async (req, res) => {
+  const { reply } = req.body
 
-  const ans = new Answer({ _user: req.user.id, _question, reply })
+  const ans = new Answer({ _user: req.user.id, _question: req.params.id, reply })
   await ans.save()
 
   req.flash('success_msg', 'The answer has been published.')
-  res.redirect('/home')
+  res.redirect(`/question/${req.params.id}`)
 })
 
 // delete answer route

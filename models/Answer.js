@@ -19,6 +19,12 @@ const AnswerSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
     }
+  ],
+  downvotes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    }
   ]
 })
 
