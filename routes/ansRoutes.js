@@ -9,6 +9,12 @@ const Answer = require('../models/Answer')
 router.post('/:id', ensureAuthenticated, async (req, res) => {
   const { reply } = req.body
   try {
+    const checkForExistingAns = await Answer.findOne({ _user: req.user.id, _question: req.params.id })
+
+    if (checkForExistingAns) {
+      req.flash('error_msg', 'You have already answered to the question.')
+      return res.redirect(`/question/${req.params.id}`)
+    }
     const ans = new Answer({ _user: req.user.id, _question: req.params.id, reply })
     await ans.save()
 

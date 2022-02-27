@@ -41,12 +41,14 @@
             <div class="col-12 mt-5">
               <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                  <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">List of Questions asked</button>
-                  <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">List of Questions answered</button>
+                  <button class="nav-link active" id="nav-asked-tab" data-bs-toggle="tab" data-bs-target="#nav-asked" type="button" role="tab" aria-controls="nav-asked" aria-selected="true">List of Questions asked</button>
+                  <button class="nav-link" id="nav-answered-tab" data-bs-toggle="tab" data-bs-target="#nav-answered" type="button" role="tab" aria-controls="nav-answered" aria-selected="false">List of Questions answered</button>
+                  <button class="nav-link" id="nav-following-tab" data-bs-toggle="tab" data-bs-target="#nav-following" type="button" role="tab" aria-controls="nav-following" aria-selected="false">Following</button>
+                  <button class="nav-link" id="nav-followers-tab" data-bs-toggle="tab" data-bs-target="#nav-followers" type="button" role="tab" aria-controls="nav-followers" aria-selected="false">Followers</button>
                 </div>
               </nav>
               <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                <div class="tab-pane fade show active" id="nav-asked" role="tabpanel" aria-labelledby="nav-asked-tab">
                   <% ques.forEach(function(item, index) { %>
                     <div class="col-12 mt-3">
                       <div class="card">
@@ -83,7 +85,7 @@
                     <% }); %>
 
                 </div>
-                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                <div class="tab-pane fade" id="nav-answered" role="tabpanel" aria-labelledby="nav-answered-tab">
                   <% ans.forEach(function(item, index) { %>
                     <div class="col-12 mt-3">
                       <div class="card">
@@ -117,6 +119,12 @@
                       </div>
                     </div>
                     <% }); %>
+                </div>
+                <div class="tab-pane fade" id="nav-following" role="tabpanel" aria-labelledby="nav-following-tab">
+
+                </div>
+                <div class="tab-pane fade" id="nav-followers" role="tabpanel" aria-labelledby="nav-followers-tab">
+
                 </div>
               </div>         
           </div>
