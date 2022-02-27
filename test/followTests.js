@@ -9,7 +9,7 @@ describe('Follow route tests', () => {
       .request('http://localhost:8089')
       .get('/follow/fdfdffff')
       .end((err, res) => {
-        assert.equal(res.status, 200)
+        assert.equal(res.status, 404)
         done()
       })
   })

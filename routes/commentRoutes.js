@@ -11,7 +11,6 @@ router.get('/:id', async (req, res) => {
   const { id } = req.params
 
   const comments = await Comment.find({ _answer: id }).populate('_user')
-  console.log(comments)
   res.send(comments)
 })
 

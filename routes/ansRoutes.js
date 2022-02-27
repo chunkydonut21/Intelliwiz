@@ -8,12 +8,16 @@ const Answer = require('../models/Answer')
 // Add an answer route
 router.post('/:id', ensureAuthenticated, async (req, res) => {
   const { reply } = req.body
+  try {
+    const ans = new Answer({ _user: req.user.id, _question: req.params.id, reply })
+    await ans.save()
 
-  const ans = new Answer({ _user: req.user.id, _question: req.params.id, reply })
-  await ans.save()
-
-  req.flash('success_msg', 'The answer has been published.')
-  res.redirect(`/question/${req.params.id}`)
+    req.flash('success_msg', 'The answer has been published.')
+    res.redirect(`/question/${req.params.id}`)
+  } catch (error) {
+    console.log(error)
+    res.status(404).json(err)
+  }
 })
 
 // delete answer route

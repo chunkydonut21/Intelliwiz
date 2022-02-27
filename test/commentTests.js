@@ -4,10 +4,10 @@ var assert = require('assert')
 chai.use(chaiHttp)
 
 describe('Comment route tests', () => {
-  it('should render answers to a question', (done) => {
+  it('should fetch a list of comments', (done) => {
     chai
       .request('http://localhost:8089')
-      .get('/comment/fdfdffff')
+      .get('/comment/621b4d33b31880dabc69dac9')
       .end((err, res) => {
         assert.equal(res.status, 200)
         done()

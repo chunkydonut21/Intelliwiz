@@ -7,7 +7,7 @@ describe('Question route tests', () => {
   it('should render Ask a question page', (done) => {
     chai
       .request('http://localhost:8089')
-      .get('/question')
+      .get('/question/create')
       .end((err, res) => {
         assert.equal(res.status, 200)
         done()
@@ -22,12 +22,12 @@ describe('Question route tests', () => {
           done()
         })
     }),
-    it('should render a single question page', (done) => {
+    it('should throw an error when trying to find a question by passing the incorrect ID', (done) => {
       chai
         .request('http://localhost:8089')
-        .get('/question/fdd')
+        .get('/question/3546fsgdvfv')
         .end((err, res) => {
-          assert.equal(res.status, 200)
+          assert.equal(res.status, 404)
           done()
         })
     })

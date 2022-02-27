@@ -26,7 +26,7 @@ router.get('/:id', async (req, res) => {
     const ans = await Answer.find({ _question: id }).populate('_user')
     res.render('view-que.html', { que, ans })
   } catch (err) {
-    console.log(err)
+    res.status(404).json(err)
   }
 })
 
