@@ -16,7 +16,7 @@ describe('Question route tests', () => {
     it('should render list of all question page', (done) => {
       chai
         .request('http://localhost:8089')
-        .get('/question/list')
+        .get('/')
         .end((err, res) => {
           assert.equal(res.status, 200)
           done()

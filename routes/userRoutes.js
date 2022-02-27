@@ -7,9 +7,17 @@ const { ensureAuthenticated, redirectAuthenticated } = require('../config/authen
 // Load User model
 const User = require('../models/User')
 const generateUserName = require('../utils/generateUser')
+const Question = require('../models/Question')
+
+// find all questions
+router.get('/', async (req, res) => {
+  const ques = await Question.find({}).populate('_user')
+
+  res.render('home.html', { ques })
+})
 
 // Login Page
-router.get('/', redirectAuthenticated, (req, res) => res.render('login.html'))
+router.get('/login', redirectAuthenticated, (req, res) => res.render('login.html'))
 
 // Register Page
 router.get('/register', redirectAuthenticated, (req, res) => res.render('register.html'))
@@ -58,8 +66,8 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res, next) => {
   console.log(req.body)
   passport.authenticate('local', {
-    successRedirect: '/question/list',
-    failureRedirect: '/',
+    successRedirect: '/',
+    failureRedirect: '/login',
     failureFlash: true
   })(req, res, next)
 })

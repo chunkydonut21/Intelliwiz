@@ -6,19 +6,16 @@ const Answer = require('../models/Answer')
 // Load Question model
 const Question = require('../models/Question')
 
-// Ask Page
-router.get('/', (req, res) => res.render('ask.html'))
-
-// find all questions
-router.get('/list', async (req, res) => {
-  const ques = await Question.find({})
-
-  res.render('home.html', { ques })
-})
-
 // Add a question page
 router.get('/create', async (req, res) => {
   res.render('add-que.html')
+})
+
+// find all questions by category
+router.get('/cat/:category', async (req, res) => {
+  const ques = await Question.find({ category: req.params.category }).populate('_user')
+
+  res.render('category-list.html', { ques, questionCategory: req.params.category })
 })
 
 // find a question

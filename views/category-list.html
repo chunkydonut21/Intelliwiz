@@ -41,7 +41,10 @@
           </div>
           <div class="row">
             <div class="col-12 mt-5">
-              <h4>List of Latest Question asked!</h4>       
+              <h4>List of Latest <%= questionCategory %> Question asked!</h4>     
+              <% if(ques.length < 1 ) { %>  
+                <div>No questions found in this category!</div>
+                <% }%>
             <% ques.forEach(function(item, index) { %>
             <div class="col-12 mt-3">
               <div class="card">
