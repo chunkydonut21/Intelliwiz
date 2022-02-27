@@ -16,6 +16,39 @@
     />
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/jquery.min.js"></script>
+    <script>
+      function showComments(ansId, index) {
+        console.log('.comment-form' + index)
+        document.querySelector('.comment-form' + index).style.display = 'block'
+
+        $.ajax({
+          type: 'GET',
+          url: `/comment/${ansId}`,
+          success: function (data) {
+            var out = '<div>'
+
+            $.each(data, function (key, value) {
+              console.log(key, value)
+              out =
+                out +
+                '<div class="card ms-5 mt-2"><div class="card-body"><div class="d-flex align-items-center">' +
+                '<div class="avatar"></div>' +
+                '<h6 class="card-subtitle text-muted ms-2">' +
+                value._user.name +
+                '</h6>' +
+                '</div>' +
+                '<p class="card-text mt-2">' +
+                value.reply +
+                '</p>' +
+                '</div>'
+              out += '</div>'
+            })
+
+            $('.comment-list' + index).html(out)
+          }
+        })
+      }
+    </script>
   </head>
   <body>
     <div class="container-fluid">
@@ -85,7 +118,7 @@
           </form>
           <h5 class="ms-5">All Answers</h5>
 
-          <% ans.forEach(function(item) { %>
+          <% ans.forEach(function(item, index) { %>
           <div class="col-12 ms-5 mt-2">
             <div class="card">
               <div class="card-body">
@@ -95,7 +128,7 @@
                 </div>
                 <p class="card-text mt-2"><%= item.reply %></p>
 
-                <div class="d-flex">
+                <div class="d-flex align-items-center">
                   <form action="/answer/upvote/<%= que.id %>" method="post">
                     <input type="text" value="<%= item.id %>" name="_answer" style="display: none" />
                     <button class="btn btn-success">
@@ -109,6 +142,36 @@
                       <i class="fa-solid fa-down-long"></i> Downvote (<%= item.downvotes.length %>)
                     </button>
                   </form>
+                  <a class="ms-2 cp" onclick="showComments('<%= item.id %>', '<%= index %>')"
+                    ><em>View / Add Comments</em></a
+                  >
+                </div>
+
+                <div>
+                  <form
+                    action="/comment/<%= que.id %>/<%= item.id %>"
+                    class="comment-form<%= index %>"
+                    style="display: none"
+                    method="post"
+                  >
+                    <div class="mb-3 mx-5 mt-5">
+                      <label for="reply" class="form-label">Have something to comment? Enter here!</label>
+                      <textarea
+                        class="form-control"
+                        name="reply"
+                        required
+                        rows="2"
+                        cols="50"
+                        placeholder="Enter your comment here"
+                      ></textarea>
+                    </div>
+                    <div class="mb-3 mx-5">
+                      <div class="d-grid gap-2">
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                      </div>
+                    </div>
+                  </form>
+                  <div class="comment-list<%= index %>"></div>
                 </div>
               </div>
             </div>

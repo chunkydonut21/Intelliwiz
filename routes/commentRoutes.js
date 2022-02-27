@@ -6,23 +6,26 @@ const { ensureAuthenticated, redirectAuthenticated } = require('../config/authen
 const Comment = require('../models/Comment')
 
 // find all comments
-router.get('/', async (req, res) => {
-  const { id } = req.params.id
+router.get('/:id', async (req, res) => {
+  console.log(req.params.id)
+  const { id } = req.params
 
-  const comments = await Comment.find({ _answer: id }).populate('_answer')
-
-  res.render('ask.html', { comments })
+  const comments = await Comment.find({ _answer: id }).populate('_user')
+  console.log(comments)
+  res.send(comments)
 })
 
 // Add a comment route
-router.post('/', ensureAuthenticated, async (req, res) => {
-  const { _answer, reply } = req.body
+router.post('/:id/:ansId', ensureAuthenticated, async (req, res) => {
+  const { reply } = req.body
+  const { id, ansId } = req.params
 
-  const ans = new Comment({ _user: req.user.id, _answer, reply })
+  const ans = new Comment({ _user: req.user.id, _answer: ansId, reply })
   await ans.save()
 
-  req.flash('success_msg', 'The comment has been published.')
-  res.redirect('/home')
+  req.flash('success_msg', 'The comment has been added.')
+
+  res.redirect(`/question/${id}`)
 })
 
 // delete comment route
