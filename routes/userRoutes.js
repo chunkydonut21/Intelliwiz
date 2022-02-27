@@ -8,12 +8,24 @@ const { ensureAuthenticated, redirectAuthenticated } = require('../config/authen
 const User = require('../models/User')
 const generateUserName = require('../utils/generateUser')
 const Question = require('../models/Question')
+const Answer = require('../models/Answer')
+const Follow = require('../models/Follow')
 
 // find all questions
 router.get('/', async (req, res) => {
   const ques = await Question.find({}).populate('_user')
 
   res.render('home.html', { ques })
+})
+
+// find all questions by a user
+router.get('/profile', ensureAuthenticated, async (req, res) => {
+  const ques = await Question.find({ _user: req.user.id })
+  const ans = await Answer.find({ _user: req.user.id }).populate('_question')
+  const follow = await Follow.find({ _user: req.user.id }).populate(['followers', 'following'])
+
+  console.log(ques, ans, follow)
+  res.render('profile.html', { ques, ans, follow })
 })
 
 // Login Page

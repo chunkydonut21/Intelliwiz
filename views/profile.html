@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Intelliwiz | Home</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
+
+  </head>
+  <body>
+    <div class="container-fluid">
+      <%- include ("./components/navbar.html",  { user: user }) %>
+
+      <div class="row">
+        <div class="col-3">
+       <%- include("./components/category.html") %>
+        </div>       
+        <div class="col-9" style="height: 100vh; overflow-y: scroll">
+          <div class="row">
+            <div class="col-12 mt-3">
+              <div class="card">
+                <div class="card-body">
+                  <p class="card-text">Do you have any question in your mind? Ask Something!</p>
+                  <a class="btn btn-primary" href="/question/create">Ask a Question</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 mt-5">
+              <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                  <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">List of Questions asked</button>
+                  <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">List of Questions answered</button>
+                </div>
+              </nav>
+              <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                  <% ques.forEach(function(item, index) { %>
+                    <div class="col-12 mt-3">
+                      <div class="card">
+                        <div class="card-body">
+                         <div class="d-flex justify-content-between">
+                          <div class="d-flex align-items-center">
+                            <div class="avatar"></div>
+                            <h6 class="card-subtitle text-muted ms-2"><%= user.name %></h6>
+                          </div>
+                          <div>
+                            <span class="badge rounded-pill bg-secondary"><%= item.category %></span>
+                          </div>
+                         </div>
+                          <p class="card-text mt-2"><%= item.question %></p>
+        
+                          <div class="d-flex">
+                            <form action="/question/upvote/<%= item.id %>" method="post">
+                              <button class="btn btn-success" type="submit">
+                                <i class="fa-solid fa-up-long"></i> Upvote (<%= item.upvotes.length %>)
+                              </button>
+                            </form>
+                            <form action="/question/downvote/<%= item.id %>" method="post">
+                              <button class="btn btn-outline-danger ms-2" name="downvote" type="submit">
+                                <i class="fa-solid fa-down-long"></i> Downvote (<%= item.downvotes.length %>)
+                              </button>
+                            </form>
+                            <a class="btn btn-outline-primary ms-2" href="/question/<%= item.id %>"
+                              ><em> View Answers...</em></a
+                            >
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <% }); %>
+
+                </div>
+                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                  <% ans.forEach(function(item, index) { %>
+                    <div class="col-12 mt-3">
+                      <div class="card">
+                        <div class="card-body">
+                         <div class="d-flex justify-content-between">
+                          <div class="d-flex align-items-center">
+                            <div class="avatar"></div>
+                            <h6 class="card-subtitle text-muted ms-2"><%= user.name %></h6>
+                          </div>
+                          <div>
+                            <span class="badge rounded-pill bg-secondary"><%= item._question.category %></span>
+                          </div>
+                         </div>
+                          <p class="card-text mt-2"><%= item._question.question %></p>
+                          <div class="d-flex">
+                            <form action="/question/upvote/<%= item._question.id %>" method="post">
+                              <button class="btn btn-success" type="submit">
+                                <i class="fa-solid fa-up-long"></i> Upvote (<%= item.upvotes.length %>)
+                              </button>
+                            </form>
+                            <form action="/question/downvote/<%= item._question.id %>" method="post">
+                              <button class="btn btn-outline-danger ms-2" name="downvote" type="submit">
+                                <i class="fa-solid fa-down-long"></i> Downvote (<%= item.downvotes.length %>)
+                              </button>
+                            </form>
+                            <a class="btn btn-outline-primary ms-2" href="/question/<%= item.id %>"
+                              ><em> View Answers...</em></a
+                            >
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <% }); %>
+                </div>
+              </div>         
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
