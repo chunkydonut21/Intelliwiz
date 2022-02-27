@@ -55,19 +55,19 @@
       <%- include ("./components/navbar.html", { user: user }) %>
 
       <div class="row">
-        <div class="col-3"><%- include("./components/category.html") %></div>
-        <div class="col-9" style="height: 100vh; overflow-y: scroll">
+        <div class="col-md-3 col-sm-12"><%- include("./components/category.html") %></div>
+        <div class="col-md-9 col-sm-12" style="height: 100vh; overflow-y: scroll">
           <div class="mt-2"><%- include ("./components/messages.html") %></div>
-          <div class="d-flex align-items-center justify-content-between mt-5 mb-3 ms-4">
+          <div class="d-flex align-items-center justify-content-between mt-5 mb-3">
             <% if(que) { %>
-            <h3 class="ms-3"><%= que.question %></h3>
+            <h3 class=""><%= que.question %></h3>
             <div>
               <span class="badge rounded-pill bg-secondary"><%= que.category %></span>
             </div>
             <% } %>
           </div>
 
-          <div class="ms-5 d-flex">
+          <div class="d-flex">
             <form action="/question/upvote/<%= que.id %>" method="post">
               <button class="btn btn-success" type="submit">
                 <i class="fa-solid fa-up-long"></i> Upvote (<%= que.upvotes.length %>)
@@ -81,7 +81,7 @@
           </div>
 
           <form action="/answer/<%= que.id %>" method="post">
-            <div class="mb-3 mx-5 mt-5">
+            <div class="mb-3 mt-5">
               <label for="reply" class="form-label">Have something constructive to answer? Enter here!</label>
               <textarea
                 class="form-control"
@@ -92,70 +92,68 @@
                 placeholder="Enter your answer here"
               ></textarea>
             </div>
-            <div class="mb-3 mx-5">
+            <div class="mb-3">
               <div class="d-grid gap-2">
                 <button class="btn btn-primary" type="submit">Submit</button>
               </div>
             </div>
           </form>
-          <h5 class="ms-5">All Answers</h5>
+          <h5 class="">All Answers</h5>
 
           <% if (ans.length < 1 ) { %>
           <div class="ms-5">No answers found!</div>
           <% } %> <% ans.forEach(function(item, index) { %>
-          <div class="col-12 ms-5 mt-2">
-            <div class="card">
-              <div class="card-body">
-                <div class="d-flex align-items-center">
-                  <div class="avatar"></div>
-                  <h6 class="card-subtitle text-muted ms-2"><%= item._user.name %></h6>
-                </div>
-                <p class="card-text mt-2"><%= item.reply %></p>
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div class="avatar"></div>
+                <h6 class="card-subtitle text-muted ms-2"><%= item._user.name %></h6>
+              </div>
+              <p class="card-text mt-2"><%= item.reply %></p>
 
-                <div class="d-flex align-items-center">
-                  <form action="/answer/upvote/<%= que.id %>" method="post">
-                    <input type="text" value="<%= item.id %>" name="_answer" style="display: none" />
-                    <button class="btn btn-success">
-                      <i class="fa-solid fa-up-long"></i> Upvote (<%= item.upvotes.length %>)
-                    </button>
-                  </form>
+              <div class="d-flex align-items-center">
+                <form action="/answer/upvote/<%= que.id %>" method="post">
+                  <input type="text" value="<%= item.id %>" name="_answer" style="display: none" />
+                  <button class="btn btn-success">
+                    <i class="fa-solid fa-up-long"></i> Upvote (<%= item.upvotes.length %>)
+                  </button>
+                </form>
 
-                  <form action="/answer/downvote/<%= que.id %>" method="post">
-                    <input type="text" value="<%= item.id %>" name="_answer" style="display: none" />
-                    <button class="btn btn-outline-danger ms-2">
-                      <i class="fa-solid fa-down-long"></i> Downvote (<%= item.downvotes.length %>)
-                    </button>
-                  </form>
-                  <a class="ms-2 cp" onclick="showComments('<%= item.id %>', '<%= index %>')"
-                    ><em>View / Add Comments</em></a
-                  >
-                </div>
-                <div>
-                  <form
-                    action="/comment/<%= que.id %>/<%= item.id %>"
-                    class="comment-form<%= index %>"
-                    style="display: none"
-                    method="post"
-                  >
-                    <div class="mb-3 mx-5 mt-5">
-                      <label for="reply" class="form-label">Have something to comment? Enter here!</label>
-                      <textarea
-                        class="form-control"
-                        name="reply"
-                        required
-                        rows="2"
-                        cols="50"
-                        placeholder="Enter your comment here"
-                      ></textarea>
+                <form action="/answer/downvote/<%= que.id %>" method="post">
+                  <input type="text" value="<%= item.id %>" name="_answer" style="display: none" />
+                  <button class="btn btn-outline-danger ms-2">
+                    <i class="fa-solid fa-down-long"></i> Downvote (<%= item.downvotes.length %>)
+                  </button>
+                </form>
+                <a class="ms-2 cp" onclick="showComments('<%= item.id %>', '<%= index %>')"
+                  ><em>View / Add Comments</em></a
+                >
+              </div>
+              <div>
+                <form
+                  action="/comment/<%= que.id %>/<%= item.id %>"
+                  class="comment-form<%= index %>"
+                  style="display: none"
+                  method="post"
+                >
+                  <div class="mb-3 mx-5 mt-5">
+                    <label for="reply" class="form-label">Have something to comment? Enter here!</label>
+                    <textarea
+                      class="form-control"
+                      name="reply"
+                      required
+                      rows="2"
+                      cols="50"
+                      placeholder="Enter your comment here"
+                    ></textarea>
+                  </div>
+                  <div class="mb-3 mx-5">
+                    <div class="d-grid gap-2">
+                      <button class="btn btn-primary" type="submit">Submit</button>
                     </div>
-                    <div class="mb-3 mx-5">
-                      <div class="d-grid gap-2">
-                        <button class="btn btn-primary" type="submit">Submit</button>
-                      </div>
-                    </div>
-                  </form>
-                  <div class="comment-list<%= index %>"></div>
-                </div>
+                  </div>
+                </form>
+                <div class="comment-list<%= index %>"></div>
               </div>
             </div>
           </div>
