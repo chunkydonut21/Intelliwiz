@@ -20,12 +20,12 @@
   </head>
   <body>
     <div class="container-fluid">
-      <%- include ("./components/navbar.html") %>
+      <%- include ("./components/navbar.html",  { user: user }) %>
 
       <div class="row">
         <div class="col-3">
        <%- include("./components/category.html") %>
-        </div>
+        </div>       
         <div class="col-9" style="height: 100vh; overflow-y: scroll">
           <div class="row">
             <div class="col-12 mt-3">

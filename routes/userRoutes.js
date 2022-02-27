@@ -64,7 +64,6 @@ router.post('/register', async (req, res) => {
 
 // Login
 router.post('/login', async (req, res, next) => {
-  console.log(req.body)
   passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/login',
@@ -76,7 +75,7 @@ router.post('/login', async (req, res, next) => {
 router.get('/logout', (req, res) => {
   req.logout()
   req.flash('success_msg', 'You are successfully logged out')
-  res.redirect('/')
+  res.redirect('/login')
 })
 
 module.exports = router

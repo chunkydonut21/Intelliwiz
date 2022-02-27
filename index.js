@@ -74,6 +74,11 @@ app.use(function (req, res, next) {
   next()
 })
 
+app.use(function (req, res, next) {
+  res.locals.user = req.user
+  next()
+})
+
 app.use('/', require('./routes/userRoutes'))
 app.use('/question', require('./routes/queRoutes'))
 app.use('/answer', require('./routes/ansRoutes'))
