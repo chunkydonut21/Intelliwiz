@@ -31,8 +31,6 @@
             <div class="col-12 mt-3">
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
                   <p class="card-text">Do you have any question in your mind? Ask Something!</p>
                   <a class="btn btn-primary" href="/question/create">Ask a Question</a>
                 </div>
@@ -52,7 +50,8 @@
                  <div class="d-flex justify-content-between">
                   <div class="d-flex align-items-center">
                     <div class="avatar"></div>
-                    <h6 class="card-subtitle text-muted ms-2"><%= item._user.name %></h6>
+                    <h6 class="card-subtitle text-muted ms-2">
+                    <a href="/profile/<%= item._user._id %>" class="tdn"><%= item._user.name %></a></h6>
                   </div>
                   <div>
                     <span class="badge rounded-pill bg-secondary"><%= item.category %></span>

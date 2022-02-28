@@ -24,25 +24,25 @@ router.get('/following', async (req, res) => {
 })
 
 // Add a follower route
-router.post('/', ensureAuthenticated, async (req, res) => {
-  const { userId } = req.body
+router.post('/:userId', ensureAuthenticated, async (req, res) => {
+  const { userId } = req.params
 
-  await Follow.findOneAndUpdate({ _user: req.user.id }, { $push: { following: userId } })
-  await Follow.findOneAndUpdate({ _user: userId }, { $push: { followers: req.user.id } })
+  await Follow.findOneAndUpdate({ _user: req.user.id }, { $push: { following: userId } }, { upsert: true })
+  await Follow.findOneAndUpdate({ _user: userId }, { $push: { followers: req.user.id } }, { upsert: true })
 
   req.flash('success_msg', 'The follower has been added.')
-  res.redirect('/home')
+  res.redirect(`/profile/${userId}`)
 })
 
 // remove follow route
-router.delete('/:id', ensureAuthenticated, async (req, res) => {
-  const { userId } = req.params.id
+router.post('/unfollow/:userId', ensureAuthenticated, async (req, res) => {
+  const { userId } = req.params
 
-  await Follow.findOneAndUpdate({ _user: req.user.id }, { $pop: { followers: userId } })
-  await Follow.findOneAndUpdate({ _user: userId }, { $push: { followers: req.user.id } })
+  await Follow.findOneAndUpdate({ _user: req.user.id }, { $pull: { following: userId } }, { upsert: true })
+  await Follow.findOneAndUpdate({ _user: userId }, { $pull: { followers: req.user.id } }, { upsert: true })
 
   req.flash('success_msg', 'The follower has been removed.')
-  res.redirect('/home')
+  res.redirect(`/profile/${userId}`)
 })
 
 module.exports = router

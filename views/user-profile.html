@@ -16,7 +16,6 @@
     />
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/jquery.min.js"></script>
-
   </head>
   <body>
     <div class="container-fluid">
@@ -31,8 +30,18 @@
             <div class="col-12 mt-3">
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-text">My profile</h5>
-                  <p class="text-muted">Created at - <%= user.createdAt %></p>
+                  <h5 class="card-text"><%= userData.name %> profile</h5>
+                  <p class="text-muted">Created at - <%= userData.createdAt %></p>                             
+                 <% if (followStatus) { %>
+                  <form action="/follow/unfollow/<%= userData._id %>" method="post">
+                    <button class="btn btn-danger" type="submit">Unfollow</button>
+                  </form>
+                  <% } %>
+                  <% if(!followStatus) { %>
+                    <form action="/follow/<%= userData._id %>" method="post">
+                      <button class="btn btn-primary" type="submit">Follow</button>
+                    </form>
+                    <% } %>
                 </div>
               </div>
             </div>
@@ -128,11 +137,37 @@
                     </div>
                     <% }); %>
                 </div>
-                <div class="tab-pane fade" id="nav-following" role="tabpanel" aria-labelledby="nav-following-tab">
-
+                <div class="tab-pane fade" id="nav-following" role="tabpanel" aria-labelledby="nav-following-tab">                  
+                  <% following.forEach(function(item, index) { %>
+                    <div class="col-12 mt-3">
+                      <div class="card">
+                        <div class="card-body">
+                         <div class="d-flex justify-content-between">
+                          <div class="d-flex align-items-center">
+                            <div class="avatar"></div>
+                            <h6 class="card-subtitle text-muted ms-2"><%= item.name %></h6>
+                          </div>                         
+                         </div>                         
+                        </div>
+                      </div>
+                    </div>
+                    <% }); %>
                 </div>
                 <div class="tab-pane fade" id="nav-followers" role="tabpanel" aria-labelledby="nav-followers-tab">
-
+                  <% followers.forEach(function(item, index) { %>
+                    <div class="col-12 mt-3">
+                      <div class="card">
+                        <div class="card-body">
+                         <div class="d-flex justify-content-between">
+                          <div class="d-flex align-items-center">
+                            <div class="avatar"></div>
+                            <h6 class="card-subtitle text-muted ms-2"><%= item.name %></h6>
+                          </div>                         
+                         </div>                         
+                        </div>
+                      </div>
+                    </div>
+                    <% }); %>
                 </div>
               </div>         
           </div>

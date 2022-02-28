@@ -18,14 +18,32 @@ router.get('/', async (req, res) => {
   res.render('home.html', { ques })
 })
 
-// find all questions by a user
+// find all questions of logged in user
 router.get('/profile', ensureAuthenticated, async (req, res) => {
   const ques = await Question.find({ _user: req.user.id })
   const ans = await Answer.find({ _user: req.user.id }).populate('_question')
   const follow = await Follow.find({ _user: req.user.id }).populate(['followers', 'following'])
 
-  console.log(ques, ans, follow)
-  res.render('profile.html', { ques, ans, follow })
+  res.render('profile.html', { ques, ans, followers: follow.followers, following: follow.following })
+})
+
+// find all questions by user id
+router.get('/profile/:id', ensureAuthenticated, async (req, res) => {
+  const ques = await Question.find({ _user: req.params.id })
+  const ans = await Answer.find({ _user: req.params.id }).populate('_question')
+  const follow = await Follow.findOne({ _user: req.params.id }).populate(['followers', 'following'])
+
+  const userData = await User.findById(req.params.id)
+
+  res.render('user-profile.html', {
+    ques,
+    ans,
+    follow,
+    userData,
+    followers: follow?.followers ? follow?.followers : [],
+    following: follow?.following ? follow?.following : [],
+    followStatus: follow?.followers.find((item) => item._id == req.user.id)
+  })
 })
 
 // Login Page

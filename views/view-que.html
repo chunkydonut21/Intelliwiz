@@ -28,13 +28,16 @@
             var out = '<div>'
 
             $.each(data, function (key, value) {
-              console.log(key, value)
               out =
                 out +
                 '<div class="card ms-5 mt-2"><div class="card-body"><div class="d-flex align-items-center">' +
                 '<div class="avatar"></div>' +
                 '<h6 class="card-subtitle text-muted ms-2">' +
+                '<a class="tdn" href="/profile/' +
+                value._user._id +
+                '">' +
                 value._user.name +
+                '</a>' +
                 '</h6>' +
                 '</div>' +
                 '<p class="card-text mt-2">' +
@@ -107,7 +110,9 @@
             <div class="card-body">
               <div class="d-flex align-items-center">
                 <div class="avatar"></div>
-                <h6 class="card-subtitle text-muted ms-2"><%= item._user.name %></h6>
+                <h6 class="card-subtitle text-muted ms-2">
+                  <a href="/profile/<%= item._user._id %>" class="tdn"><%= item._user.name %></a>
+                </h6>
               </div>
               <p class="card-text mt-2"><%= item.reply %></p>
 
