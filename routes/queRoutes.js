@@ -13,7 +13,7 @@ router.get('/create', async (req, res) => {
 
 // find all questions by category
 router.get('/cat/:category', async (req, res) => {
-  const ques = await Question.find({ category: req.params.category }).populate('_user')
+  const ques = await Question.find({ category: req.params.category }).sort({ createdAt: -1 }).populate('_user')
 
   res.render('category-list.html', { ques, questionCategory: req.params.category })
 })

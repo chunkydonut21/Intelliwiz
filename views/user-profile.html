@@ -30,7 +30,7 @@
             <div class="col-12 mt-3">
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-text"><%= userData.name %> profile</h5>
+                  <h5 class="card-text"><%= userData.name %>'s profile</h5>
                   <p class="text-muted">Created at - <%= userData.createdAt %></p>                             
                  <% if (followStatus) { %>
                   <form action="/follow/unfollow/<%= userData._id %>" method="post">
