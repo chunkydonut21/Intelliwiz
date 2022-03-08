@@ -22,9 +22,14 @@ router.get('/', async (req, res) => {
 router.get('/profile', ensureAuthenticated, async (req, res) => {
   const ques = await Question.find({ _user: req.user.id }).sort({ createdAt: -1 })
   const ans = await Answer.find({ _user: req.user.id }).populate('_question')
-  const follow = await Follow.find({ _user: req.user.id }).populate(['followers', 'following'])
+  const follow = await Follow.findOne({ _user: req.user.id }).populate(['followers', 'following'])
 
-  res.render('profile.html', { ques, ans, followers: follow.followers, following: follow.following })
+  res.render('profile.html', {
+    ques,
+    ans,
+    followers: follow?.followers ? follow?.followers : [],
+    following: follow?.following ? follow?.following : []
+  })
 })
 
 // find all questions by user id
@@ -38,7 +43,6 @@ router.get('/profile/:id', ensureAuthenticated, async (req, res) => {
   res.render('user-profile.html', {
     ques,
     ans,
-    follow,
     userData,
     followers: follow?.followers ? follow?.followers : [],
     following: follow?.following ? follow?.following : [],

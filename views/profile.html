@@ -129,7 +129,20 @@
                     <% }); %>
                 </div>
                 <div class="tab-pane fade" id="nav-following" role="tabpanel" aria-labelledby="nav-following-tab">
-
+                  <% following.forEach(function(item, index) { %>
+                    <div class="col-12 mt-3">
+                      <div class="card">
+                        <div class="card-body">
+                         <div class="d-flex justify-content-between">
+                          <div class="d-flex align-items-center">
+                            <div class="avatar"></div>
+                            <h6 class="card-subtitle text-muted ms-2"><%= item.name %></h6>
+                          </div>                         
+                         </div>                         
+                        </div>
+                      </div>
+                    </div>
+                    <% }); %>
                 </div>
                 <div class="tab-pane fade" id="nav-followers" role="tabpanel" aria-labelledby="nav-followers-tab">
 
