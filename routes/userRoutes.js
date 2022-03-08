@@ -61,19 +61,15 @@ router.post('/register', async (req, res) => {
   if (!name || !email || !password || !confirm_password) {
     errors.push({ msg: 'Please enter all fields' })
   }
-
   if (password != confirm_password) {
     errors.push({ msg: 'Passwords do not match' })
   }
-
   if (password.length < 8) {
     errors.push({ msg: 'Password must be at least 8 characters' })
   }
-
   if (errors.length > 0) {
     return res.render('register.html', { errors, name, email, password, confirm_password })
   }
-
   // check if userr already exists
   const user = await User.findOne({ email })
   if (user) {
