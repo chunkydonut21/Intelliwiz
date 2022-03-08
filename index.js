@@ -3,6 +3,7 @@
  * mongodb - non-relational database
  * path - used for handling the file path
  * connect-flash and express-session used for displaying error and success messages to the user after filling the form
+ * passport - for authentication
  */
 const express = require('express')
 const mongoose = require('mongoose')
@@ -39,10 +40,6 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')))
 app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')))
 app.use('/js', express.static(path.join(__dirname, 'node_modules/jquery/dist')))
-// app.use(
-//   '/stylesheets/fontawesome',
-//   express.static(path.join(__dirname, 'node_modules/@fortawesome/fontawesome/css/all.css'))
-// )
 
 // setting up the view engine
 app.set('views', __dirname + '/views')
