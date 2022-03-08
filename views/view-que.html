@@ -70,17 +70,24 @@
             <% } %>
           </div>
 
-          <div class="d-flex">
-            <form action="/question/upvote/<%= que.id %>" method="post">
-              <button class="btn btn-success" type="submit">
-                <i class="fa-solid fa-up-long"></i> Upvote (<%= que.upvotes.length %>)
-              </button>
+          <div class="d-flex justify-content-between">
+            <div class="d-flex">
+              <form action="/question/upvote/<%= que.id %>" method="post">
+                <button class="btn btn-success" type="submit">
+                  <i class="fa-solid fa-up-long"></i> Upvote (<%= que.upvotes.length %>)
+                </button>
+              </form>
+              <form action="/question/downvote/<%= que.id %>" method="post">
+                <button class="btn btn-outline-danger ms-2" name="downvote" type="submit">
+                  <i class="fa-solid fa-down-long"></i> Downvote (<%= que.downvotes.length %>)
+                </button>
+              </form>
+            </div>
+            <% if (user && user.id == que._user._id) { %>
+            <form action="/question/<%= que.id %>" method="post">
+              <button class="btn btn-outline-danger ms-2"><i class="fa-solid fa-trash"></i> Delete</button>
             </form>
-            <form action="/question/downvote/<%= que.id %>" method="post">
-              <button class="btn btn-outline-danger ms-2" name="downvote" type="submit">
-                <i class="fa-solid fa-down-long"></i> Downvote (<%= que.downvotes.length %>)
-              </button>
-            </form>
+            <% } %>
           </div>
 
           <form action="/answer/<%= que.id %>" method="post">
@@ -116,23 +123,31 @@
               </div>
               <p class="card-text mt-2"><%= item.reply %></p>
 
-              <div class="d-flex align-items-center">
-                <form action="/answer/upvote/<%= que.id %>" method="post">
-                  <input type="text" value="<%= item.id %>" name="_answer" style="display: none" />
-                  <button class="btn btn-success">
-                    <i class="fa-solid fa-up-long"></i> Upvote (<%= item.upvotes.length %>)
-                  </button>
-                </form>
+              <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center">
+                  <form action="/answer/upvote/<%= que.id %>" method="post">
+                    <input type="text" value="<%= item.id %>" name="_answer" style="display: none" />
+                    <button class="btn btn-success">
+                      <i class="fa-solid fa-up-long"></i> Upvote (<%= item.upvotes.length %>)
+                    </button>
+                  </form>
 
-                <form action="/answer/downvote/<%= que.id %>" method="post">
-                  <input type="text" value="<%= item.id %>" name="_answer" style="display: none" />
-                  <button class="btn btn-outline-danger ms-2">
-                    <i class="fa-solid fa-down-long"></i> Downvote (<%= item.downvotes.length %>)
-                  </button>
+                  <form action="/answer/downvote/<%= que.id %>" method="post">
+                    <input type="text" value="<%= item.id %>" name="_answer" style="display: none" />
+                    <button class="btn btn-outline-danger ms-2">
+                      <i class="fa-solid fa-down-long"></i> Downvote (<%= item.downvotes.length %>)
+                    </button>
+                  </form>
+                  <a class="ms-2 cp" onclick="showComments('<%= item.id %>', '<%= index %>')"
+                    ><em>View / Add Comments</em></a
+                  >
+                </div>
+
+                <% if (user && user.id == item._user.id) { %>
+                <form action="/answer/<%= que.id %>/<%= item.id %>" method="post">
+                  <button class="btn btn-outline-danger ms-2"><i class="fa-solid fa-trash"></i> Delete</button>
                 </form>
-                <a class="ms-2 cp" onclick="showComments('<%= item.id %>', '<%= index %>')"
-                  ><em>View / Add Comments</em></a
-                >
+                <% } %>
               </div>
               <div>
                 <form

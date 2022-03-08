@@ -22,20 +22,9 @@ router.post('/:id', ensureAuthenticated, async (req, res) => {
     res.redirect(`/question/${req.params.id}`)
   } catch (error) {
     console.log(error)
-    res.status(404).json(err)
+    res.status(404).json(error)
   }
 })
-
-// delete answer route
-router.delete('/:id', ensureAuthenticated, async (req, res) => {
-  const { id } = req.params.id
-
-  await Answer.findByIdAndDelete({ _id: id, _user: req.user.id })
-
-  req.flash('success_msg', 'The answer has been deleted.')
-  res.redirect('/home')
-})
-
 // Upvote an answer
 router.post('/upvote/:id', ensureAuthenticated, async (req, res) => {
   const resp = await Answer.findOne({ _id: req.body._answer, upvotes: { $elemMatch: { $eq: req.user.id } } })
@@ -74,4 +63,19 @@ router.post('/downvote/:id', ensureAuthenticated, async (req, res) => {
     res.redirect(`/question/${req.params.id}`)
   }
 })
+
+// delete answer route
+router.post('/:id/:ansId', ensureAuthenticated, async (req, res) => {
+  const { id, ansId } = req.params
+
+  try {
+    await Answer.findByIdAndDelete({ _id: ansId, _user: req.user.id })
+
+    req.flash('success_msg', 'The answer has been deleted.')
+    res.redirect(`/question/${id}`)
+  } catch (error) {
+    return error
+  }
+})
+
 module.exports = router

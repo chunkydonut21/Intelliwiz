@@ -41,16 +41,6 @@ router.post('/create', ensureAuthenticated, async (req, res) => {
   res.redirect(`/question/${ques._id}`)
 })
 
-// delete question route
-router.delete('/:id', ensureAuthenticated, async (req, res) => {
-  const { id } = req.params.id
-
-  await Question.findByIdAndDelete({ _id: id })
-
-  req.flash('success_msg', 'The asked question has been deleted.')
-  res.redirect('/home')
-})
-
 // Upvote a question
 router.post('/upvote/:id', ensureAuthenticated, async (req, res) => {
   const resp = await Question.findOne({ _id: req.params.id, upvotes: { $elemMatch: { $eq: req.user.id } } })
@@ -87,6 +77,20 @@ router.post('/downvote/:id', ensureAuthenticated, async (req, res) => {
 
     req.flash('error_msg', 'The Question has been downvoted.')
     res.redirect(`/question/${req.params.id}`)
+  }
+})
+
+// delete question route
+router.post('/:id', ensureAuthenticated, async (req, res) => {
+  const { id } = req.params
+
+  try {
+    await Question.findByIdAndDelete({ _id: id })
+
+    req.flash('success_msg', 'The asked question has been deleted.')
+    res.redirect('/')
+  } catch (error) {
+    return error
   }
 })
 
