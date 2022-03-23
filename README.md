@@ -12,3 +12,5 @@ $ cd Intelliwiz
 $ npm install
 $ npm run dev
 ```
+
+Go to port Localhost port 8089 to view the application.
